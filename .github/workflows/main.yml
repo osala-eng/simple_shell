@@ -34,5 +34,6 @@ jobs:
         run: |
           echo Add other actions to build,
           echo Starting betty checks
-          ./suites/betty *.h *.c
-          ls 
+          ./suites/betty *.h *.c > __dump_file
+          ./suites/handler
+          ls
