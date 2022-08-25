@@ -1,33 +1,38 @@
 #!/bin/bash
 
-DATA="__dump_file"
-ERR="ERROR"
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
+# Simple shell checker 
+# Author Jashon Osala
+# 2022
 
-if [ ! -f "$DATA" ]; then
-	echo -e "No testfiles to analyze"
-	exit 0
+TEST_DOC="local_check"
+TOOL_LOC="suites"
+
+# checker addresses
+
+address_00="https://raw.githubusercontent.com/osala-eng/alx_tools/master/simple_sh/t0/check_00.tar.gz"
+
+file_00="check_00.tar.gz"
+
+if [ ! -f $TEST_DOC ]; then
+	echo -e "No checks to run" 1>&2
+	exit 64 
 fi
 
-if [ "$(grep -c $ERR $DATA)" -ge 1 ]; then
-	echo -e "==============================================="
-	echo -e "Tests failed with the following errors"
-	echo -e "${RED}`cat $DATA`${NC}"
-	rm $DATA
-	exit 1
-fi
+call_check () {
+	case "$1" in
+		"CHECK_00") echo -e "Task 0: Checks"
+			curl $address_00 > $file_00
+			mkdir -p $TOOL_LOC
+			tar xfz $file_00 -C "${TOOL_LOC}/"
+			./${TOOL_LOC}/check_00
+			;;
+		*)
+			echo -e "Specified test $1 not defined" 1>&2
+			exit 64
+			;;
+	esac
+}
 
-# cleanup
-echo -e
-echo -e "===================Test Log==================="
-echo -e
-echo -e "${GREEN}`cat $DATA`${NC}"
-echo -e
-
-rm $DATA
-
-echo -e "${GREEN}All tests compleated successfully${NC}"
-echo -e
-exit 0
+while read line; do
+	call_check $line
+done < $TEST_DOC
