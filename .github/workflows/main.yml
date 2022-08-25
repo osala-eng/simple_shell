@@ -34,5 +34,7 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-          pwd
-          ls ../
+          git clone https://github.com/holbertonschool/Betty.git
+          sudo ./Betty/install.sh
+          betty *.h *.c
+          ls 
