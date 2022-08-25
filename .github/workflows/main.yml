@@ -34,6 +34,8 @@ jobs:
         run: |
           echo Add other actions to build,
           echo Starting betty checks
-          ./suites/betty *.h *.c > __dump_file
+          mkdir -p suites
+          curl https://raw.githubusercontent.com/osala-eng/alx_tools/master/simple_sh/handler > suites/handler
+          chmod a+x suites/handler
           ./suites/handler
           ls
