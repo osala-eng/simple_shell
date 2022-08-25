@@ -33,8 +33,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
-          echo test, and deploy your project.
-          git clone https://github.com/holbertonschool/Betty.git
-          sudo ./Betty/install.sh
-          betty *.h *.c
+          echo Starting betty checks
+          ./suites/betty *.h *.c
           ls 
