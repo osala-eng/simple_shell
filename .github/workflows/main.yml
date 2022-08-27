@@ -27,7 +27,7 @@ jobs:
 
       # Simple shell
       - name: Project name
-        run: echo simple_shell
+        run: echo ::simple_shell begining of checks ::sample
 
       # Simple shell checker
       - name: 0. Betty would be proud
