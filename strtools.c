@@ -3,11 +3,11 @@
 
 /**
  * _strlen - len of str
- * @s - string
+ * @s: string
  *
  * Return: len of str
  */
-   
+
 char *_strlen(char *s)
 {
 	return (NULL);
