@@ -25,4 +25,4 @@
 #include <dirent.h>
 #include <signal.h>
 
-#endif
+#endif /* _ROOT_H */

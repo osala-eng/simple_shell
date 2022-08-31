@@ -25,15 +25,80 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # Simple shell
+      - name: Project name
+        run: echo ::simple_shell begining of checks ::sample
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      # Simple shell checker
+      - name: 0. Betty would be proud
         run: |
           echo Add other actions to build,
           echo Starting betty checks
-          ./suites/betty *.h *.c > __dump_file
+          mkdir -p suites
+          curl https://raw.githubusercontent.com/osala-eng/alx_tools/master/simple_sh/handler > suites/handler
+          chmod a+x suites/handler
           ./suites/handler
-          ls
+          
+      - name: 1. Simple shell 0.1
+        run: |
+          echo Test not yet defined
+          
+      - name: 2. Simple shell 0.2
+        run: |
+          echo Test not yet defined
+          
+      - name: 3. Simple shell 0.3
+        run: |
+          echo Test not yet defined
+          
+      - name: 4. Simple shell 0.4
+        run: |
+          echo Test not yet defined
+        
+      - name: 5. Simple shell 1.0
+        run: |
+          echo Test not yet defined
+          
+      - name: 6. Simple shell 0.1.1
+        run: |
+          echo Test not yet defied
+          
+      - name: 7. Simple shell 0.2.1
+        run: |
+          echo Test not yet define
+          
+      - name: 8. Simple shell 0.4.1
+        run: |
+          echo Test not yet defined
+          
+      - name: 9. setenv, unsetenv
+        run: |
+          echo Test not yet defined
+          
+      - name: 10. cd
+        run: |
+          echo Test not yet defined
+          
+      - name: 11. ;
+        run: |
+          echo Test not yet defined
+          
+      - name: 12. && and ||
+        run: |
+          echo Test not yet defined
+          
+      - name: 13. alias
+        run: |
+          echo Test not yet defined
+          
+      - name: 14. Variables
+        run: |
+          echo Test not yet defined
+          
+      - name: 15. Comments
+        run: |
+          echo Test not yet defined
+          
+      - name: 16. File as input
+        run: |
+          echo Test not yet defined
