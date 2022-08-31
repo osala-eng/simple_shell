@@ -19,10 +19,11 @@ __home__ void ctrl_c(int n)
  *
  * Return: int
  */
-__home__ int prompt(char **env)
+__home__ int prompt(__silent char **env)
 {
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "$ ", 2);
 
 	return (0);
 }
+#endif
