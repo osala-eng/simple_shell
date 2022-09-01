@@ -20,14 +20,14 @@ int _strlen(char *s)
 }
 
 /**
- * hsh_strncmp - Compare two strings with a specific length
+ * _strncmp - Compare two strings with a specific length
  * @s1: String 1
  * @s2: String 2
  * @len: Length
  *
  * Return: Difference of characters (0 - Equal)
  */
-int hsh_strncmp(char *s1, char *s2, int len)
+int _strncmp(char *s1, char *s2, int len)
 {
 	int i = 1;
 
@@ -40,4 +40,24 @@ int hsh_strncmp(char *s1, char *s2, int len)
 		i++;
 	}
 	return (0);
+}
+
+/**
+ * _strcmp - Compare two strings
+ * @s1: String 1
+ * @s2: String 2
+ *
+ * Return: Difference of characters (0 - Equal)
+ */
+int _strcmp(char *s1, char *s2)
+{
+	while (*s1 == *s2)
+	{
+		if (*s1 == '\0')
+			return (0);
+		s1++;
+		s2++;
+	}
+
+	return (*s1 - *s2);
 }
