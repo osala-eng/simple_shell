@@ -61,3 +61,15 @@ int _strcmp(char *s1, char *s2)
 
 	return (*s1 - *s2);
 }
+
+/**
+ * _strconcat - Copies a string and returns a pointer to the array.
+ * @s1: String 1
+ * @s2: String 2
+ *
+ * Return: Pointer to the array or NULL.
+ */
+
+char *_strconcat(char *s1, char *s2)
+{
+	int i = 0, j = 0, k = 0, n = 0;
