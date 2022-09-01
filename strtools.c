@@ -73,3 +73,31 @@ int _strcmp(char *s1, char *s2)
 char *_strconcat(char *s1, char *s2)
 {
 	int i = 0, j = 0, k = 0, n = 0;
+	char *a;
+
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+	while (*(s1 + i))
+		i++;
+
+	while (*(s2 + j))
+		j++;
+
+	a = malloc(sizeof(char) * (i + j + 3));
+	if (a == NULL)
+		return (NULL);
+
+	for (k = 0; k < i; k++)
+	{
+		*(a + k) = *(s1 + k);
+	}
+
+	for (n = 0; n <= j; n++)
+	{
+		*(a + n + k) = *(s2 + n);
+	}
+
+	return (a);
+}
