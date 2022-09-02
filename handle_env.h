@@ -1,0 +1,116 @@
+#ifndef _HANDLE_ENV_H
+#define _HANDLE_ENV_H
+
+#include "root.h"
+
+/**
+ * print_list - _print linked list
+ * @h: linked list
+ * Return: size of linked list
+ */
+__home size_t print_list(list_t *h)
+{
+	list_t *temp_list = h;
+	int count = 0;
+	int c = 0;
+
+	if (!h)
+		return (0);
+	while (temp_list)
+	{
+		if (temp_list->c)
+			write(STDOUT_FILENO, "(nil)\n", 6);
+		else
+		{
+			c = 0;
+			while ((temp_list->c)[c])
+			c++;
+			write(STDOUT_FILENO, temp_list->c, c);
+			write(STDOUT_FILENO, "\n", 1);
+		}
+		temp_list = temp_list->next;
+		count++;
+	}
+	return (count);
+}
+
+/**
+ * add_node_end - add node to end of linked list
+ * @head: pointer to head of linked list
+ * @str: data to new node
+ * Return: pointer to new_list linked list
+ */
+__home list_t *add_node_end(list_t **head, char *str)
+{
+	list_t *new_list;
+	list_t *temp;
+
+	if (!head || !str)
+		return (NULL);
+
+	new_list = malloc(sizeof(list_t));
+	if (!new_list)
+		return (NULL);
+
+	new_list->c = _strdup(str);
+	new_list->next = NULL;
+
+	temp = *head;
+	if (temp)
+	{
+		while (temp->next)
+			temp = temp->next;
+
+		temp->next = new_list;
+	}
+	else
+		*head = new_list;
+
+	return (*head);
+}
+
+/**
+ * free_list - frees linked list
+ * @list: linked list
+ */
+__home void free_list(list_t *list)
+{
+	list_t *temp;
+
+	while (list)
+	{
+		temp = list;
+		list = list->next;
+		free(temp->c);
+		free(temp);
+	}
+}
+
+/**
+ * print_env - print env
+ * @str: string list
+ * @env: list
+ * Return: int
+ */
+__home int print_env(char **str, list_t *env)
+{
+	free_array(str);
+	print_list(env);
+	return (0);
+}
+
+/**
+ * env_list - create linked list of env
+ * @env: enviroment variable
+ * Return: list_t
+ */
+__home list_t *env_list(char **env)
+{
+	list_t *head = NULL;
+	int i;
+
+	for (i = 0; env[i]; i++)
+		add_node_end(&head, env[i]);
+	return (head);
+}
+#endif
