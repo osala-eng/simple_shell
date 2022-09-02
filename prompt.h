@@ -5,11 +5,36 @@
 #include "handle_env.h"
 
 /**
- * ctrl_c - ignore ctrl-c and reprompt
+ * temp_exit - temporary exit
+ * @str: str
  */
-__home void ctrl_c(void)
+__home void temp_exit(char *str)
 {
+	if (!_strcmp(str, "exit"))
+		exit(0);
+}
+
+/**
+ * ctrl_c - ignore ctrl-c and reprompt
+ * @i: int
+ */
+__home void ctrl_c(int __silent i)
+{
+	write(STDOUT_FILENO, "\n", 1);
 	start_i();
+}
+
+/**
+ * ctrl_d - exit if control d
+ * @ret: getline status
+ */
+__home void ctrl_d(ssize_t ret)
+{
+	if (ret == -1)
+	{
+		write(STDOUT_FILENO, "^D\n", 3);
+		exit(0);
+	}
 }
 
 /**
@@ -23,14 +48,12 @@ __home char **split_prompt(void)
 	int i;
 	char temp_s[100];
 	char **arg = NULL;
-
-	ssize_t __silent ret;
+	ssize_t ret = 0;
 
 	s = NULL;
-	ret = 0;
 	arg = malloc(sizeof(char));
 	ret = getline(&s, &len, stdin);
-
+	ctrl_d(ret);
 	for (text = strtok(s, delim), i = 0 ; text; i++)
 	{
 		arg[i] = malloc(sizeof(char) * (_strlen(text) + 6));
@@ -38,6 +61,7 @@ __home char **split_prompt(void)
 			return (NULL);
 		if (!i && access(text, F_OK))
 		{
+			temp_exit(text);
 			sprintf(temp_s, "/bin/%s", text);
 			strcpy(arg[i], temp_s);
 			goto NEXT;
@@ -64,6 +88,7 @@ __home int prompt(char **av, char **env)
 	int status = 0;
 	int non_int = 0;
 	char **arg;
+
 	__silent pid_t pid;
 
 RESET:
@@ -73,6 +98,7 @@ RESET:
 	else
 		non_int = 1;
 
+	signal(SIGINT, ctrl_c);
 	arg = split_prompt();
 	if (!arg[0])
 		goto RESET;
