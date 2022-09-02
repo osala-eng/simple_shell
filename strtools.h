@@ -1,3 +1,6 @@
+#ifndef _STR_TOOLS_H
+#define _STR_TOOLS_H
+
 #include "root.h"
 
 /**
@@ -7,7 +10,7 @@
  * Return: len of str
  */
 
-int _strlen(char *s)
+__home int _strlen(char *s)
 {
 	int i = 0;
 
@@ -27,7 +30,7 @@ int _strlen(char *s)
  *
  * Return: Difference of characters (0 - Equal)
  */
-int _strncmp(char *s1, char *s2, int len)
+__home int _strncmp(char *s1, char *s2, int len)
 {
 	int i = 1;
 
@@ -49,7 +52,7 @@ int _strncmp(char *s1, char *s2, int len)
  *
  * Return: Difference of characters (0 - Equal)
  */
-int _strcmp(char *s1, char *s2)
+__home int _strcmp(char *s1, char *s2)
 {
 	while (*s1 == *s2)
 	{
@@ -70,7 +73,7 @@ int _strcmp(char *s1, char *s2)
  * Return: Pointer to the array or NULL.
  */
 
-char *_strconcat(char *s1, char *s2)
+__home char *_strconcat(char *s1, char *s2)
 {
 	int i = 0, j = 0, k = 0, n = 0;
 	char *a;
@@ -111,7 +114,7 @@ char *_strconcat(char *s1, char *s2)
  *
  * Return: pointer to space in memory or NULL
  */
-char *_strdup(char *str)
+__home char *_strdup(char *str)
 {
 	int len, i;
 	char *s;
@@ -119,7 +122,7 @@ char *_strdup(char *str)
 	if (!str)
 		return (NULL);
 
-	len = strlen(str);
+	len = _strlen(str);
 	s = malloc(sizeof(char) * len + 1);
 
 	if (!s)
@@ -132,3 +135,5 @@ char *_strdup(char *str)
 
 	return (s);
 }
+
+#endif

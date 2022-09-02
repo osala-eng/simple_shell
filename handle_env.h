@@ -2,6 +2,7 @@
 #define _HANDLE_ENV_H
 
 #include "root.h"
+#include "strtools.h"
 
 /**
  * print_list - _print linked list

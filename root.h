@@ -7,7 +7,7 @@
 
 #define __silent __attribute__((unused))
 #define __interactive isatty(STDIN_FILENO)
-#define __home __attribute__((weak)) 
+#define __home __attribute__((weak))
 #define END '\0'
 #define TEMP_PATH "/bin"
 
@@ -39,23 +39,9 @@
  */
 typedef struct list
 {
-        char *c;
-        struct list *next;
+	char *c;
+	struct list *next;
 } list_t;
-
-/*
-int prompt(char **av, char **env);
-list_t *add_node_end(list_t **head, char *str);
-void free_list(list_t *list);
-int print_env(char **str, list_t *env);
-list_t *env_list(char **env);
-size_t print_list(list_t *h);
-*/
-int _strlen(char *s);
-int _strncmp(char *s1, char *s2, int len);
-int _strcmp(char *s1, char *s2);
-char *_strconcat(char *s1, char *s2);
-char *_strdup(char *str);
 
 /**
  * start_i - begining of prompt

@@ -10,6 +10,7 @@
 int main(__silent int ac, __silent char **av, __silent char **env)
 {
 	int ret;
+
 	ret = prompt(av, env);
 	return (ret);
 }
