@@ -6,14 +6,14 @@
  */
 
 #define __silent __attribute__((unused))
-#define __interactive isatty(STDIN_FILENO)
+#define __interactive isatty(STDIN)
 #define __home __attribute__((weak))
 #define END '\0'
 #define TEMP_PATH "/bin"
 
-#define BLUE (write(STDOUT_FILENO, "\033[0;34m", 8))
-#define NC (write(STDOUT_FILENO, "\033[0m", 5))
-#define GREEN (write"\033[0;32m"
+#define BLUE (write(STDOUT, "\033[0;34m", 8))
+#define NC (write(STDOUT, "\033[0m", 5))
+#define GREEN (write(STDOUT, "\033[0;32m", 8))
 
 /*
  * Includes
@@ -30,7 +30,22 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <signal.h>
+#include <stdarg.h>
 
+/**
+ * enum simple_bool - simple boolean
+ * @FALSE: NO
+ * @TRUE: YES
+ * @STDIN: IN
+ * @STDOUT: OUT
+ */
+enum simple_bool
+{
+	FALSE,
+	TRUE,
+	STDIN = STDIN_FILENO,
+	STDOUT = STDOUT_FILENO
+};
 
 /**
  * struct list - linked list
@@ -43,15 +58,18 @@ typedef struct list
 	struct list *next;
 } list_t;
 
+typedef unsigned int uint;
+typedef unsigned long int ulint;
+
 /**
  * start_i - begining of prompt
  */
 __home void start_i(void)
 {
 	BLUE;
-	write(STDOUT_FILENO, "simple_shell", 12);
+	write(STDOUT, "simple_shell", 12);
 	NC;
-	write(STDOUT_FILENO, "$ ", 2);
+	write(STDOUT, "$ ", 2);
 }
 
 /**
@@ -61,6 +79,9 @@ __home void start_i(void)
 __home void free_array(char **str)
 {
 	int i;
+
+	if (!str && !*str)
+		return;
 
 	for (i = 0; str[i]; i++)
 		free(str[i]);

@@ -2,7 +2,7 @@
 #define _HANDLE_ENV_H
 
 #include "root.h"
-#include "strtools.h"
+#include "string_t.h"
 
 /**
  * print_list - _print linked list
@@ -19,15 +19,15 @@ __home size_t print_list(list_t *h)
 		return (0);
 	while (temp_list)
 	{
-		if (temp_list->c)
-			write(STDOUT_FILENO, "(nil)\n", 6);
+		if (!temp_list->c)
+			write(STDOUT, "(nil)\n", 6);
 		else
 		{
 			c = 0;
 			while ((temp_list->c)[c])
 			c++;
-			write(STDOUT_FILENO, temp_list->c, c);
-			write(STDOUT_FILENO, "\n", 1);
+			write(STDOUT, temp_list->c, c);
+			write(STDOUT, "\n", 1);
 		}
 		temp_list = temp_list->next;
 		count++;
@@ -41,33 +41,29 @@ __home size_t print_list(list_t *h)
  * @str: data to new node
  * Return: pointer to new_list linked list
  */
-__home list_t *add_node_end(list_t **head, char *str)
+__home list_t *add_node_end(list_t **head, __silent char *str)
 {
-	list_t *new_list;
-	list_t *temp;
-
-	if (!head || !str)
-		return (NULL);
+	list_t *new_list, *temp;
 
 	new_list = malloc(sizeof(list_t));
 	if (!new_list)
 		return (NULL);
 
-	new_list->c = _strdup(str);
-	new_list->next = NULL;
+	(*new_list).c = _strdup(str);
+	(*new_list).next = NULL;
+
+	if (!(*head))
+	{
+		*head = new_list;
+		goto KILL;
+	}
 
 	temp = *head;
-	if (temp)
-	{
-		while (temp->next)
-			temp = temp->next;
+	while ((*temp).next)
+		temp = (*temp).next;
+	(*temp).next = new_list;
 
-		temp->next = new_list;
-	}
-	else
-		*head = new_list;
-
-	return (*head);
+KILL:	return (new_list);
 }
 
 /**

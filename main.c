@@ -1,4 +1,4 @@
-#include "master.h"
+#include "prompt.h"
 
 /**
  * main - creates a simple shell
