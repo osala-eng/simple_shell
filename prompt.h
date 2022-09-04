@@ -18,12 +18,18 @@ __home void ctrl_c(int __silent i)
 /**
  * ctrl_d - exit if control d
  * @ret: getline status
+ * @s: string to free
+ * @arg: tokens to free
+ * @env_l: list to free
  */
-__home void ctrl_d(ssize_t ret)
+__home void ctrl_d(ssize_t ret, char *s, char **arg, list_t *env_l)
 {
-	if (ret == -1)
+	if (ret == EOF)
 	{
 		write(STDOUT, "^D\n", 3);
+		free(arg);
+		free(s);
+		free_list(env_l);
 		exit(0);
 	}
 }
@@ -35,46 +41,27 @@ __home void ctrl_d(ssize_t ret)
  */
 __home char **split_prompt(__silent list_t *env_l)
 {
-	char *s, *text, *delim = " \n";
-	size_t len;
-	int i;
-	char temp_s[1024];
+	char *s = NULL;
+	char *text = NULL;
+	char *delim = " \n";
+	size_t len = 0;
+	int i = 0;
 	char **arg = NULL;
 	ssize_t ret = 0;
 
-	s = NULL;
 	arg = malloc(sizeof(char));
 	ret = getline(&s, &len, stdin);
-	ctrl_d(ret);
+	ctrl_d(ret, s, arg, env_l);
 	for (text = strtok(s, delim), i = 0 ; text; i++)
 	{
-		arg[i] = malloc(sizeof(char) * (_strlen(text) + 20));
+		arg[i] = malloc(sizeof(char) * (_strlen(text) + 1));
 		if (!arg[i])
-			return (NULL);
-		if (!i && access(text, F_OK))
-		{
-			__exit(text);
-			sprintf(temp_s, "%s", get_path(env_l, text));
-			if (!access(temp_s, F_OK))
-				_strcpy(arg[i], temp_s);
-			else
-				_strcpy(arg[i], text);
-			/*temp_s = get_path(env_l, text);
-			arg[i] = malloc(sizeof(char) * (_strlen(temp_s) + 1));
-                	if (!arg[i])
-                        	return (NULL);
-			_strcpy(arg[i], temp_s);*/
-			goto NEXT;
-		}
-		/*arg[i] = malloc(sizeof(char) * (_strlen(text) + 6));
-                if (!arg[i])
-                        return (NULL);*/
-		_strcpy(arg[i], text);
-
-NEXT:		
+			return (arg);
+		_strcpy(arg[i], (char *)text);
 		text = strtok(NULL, delim);
 	}
-	arg[i] = text;
+	arg[i] = NULL;
+	free(s);
 	return (arg);
 }
 
@@ -89,9 +76,10 @@ __home int prompt(char **av, char **env)
 {
 	int status = 0;
 	int non_int = 0;
-	char **arg;
+	char **arg = NULL;
 	pid_t pid;
-	list_t *env_l;
+	list_t *env_l = NULL;
+	char *path = NULL;
 
 	env_l = env_list(env);
 
@@ -101,17 +89,19 @@ RESET:
 
 	else
 		non_int = TRUE;
-
 	signal(SIGINT, ctrl_c);
 	arg = split_prompt(env_l);
+	path = get_path(env_l, arg[0]);
+	__exit(path);
+	pid = 0;
 	if (!arg[0])
 		goto RESET;
-	else
+	else if (!access(path, F_OK))
 		pid = fork();
 
 	if (pid == 0)
 	{
-		if (execve(arg[0], arg, env) == -1)
+		if (execve(path, arg, env) == EOF)
 			printf("%s : 1: %s: not found\n", av[0], arg[0]);
 	}
 	else
@@ -119,7 +109,7 @@ RESET:
 
 	if (arg[0])
 		free_array(arg);
-
+	/*free(path);*/
 	if (!non_int)
 		goto RESET;
 

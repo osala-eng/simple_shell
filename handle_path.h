@@ -65,8 +65,8 @@ __home char *get_path(list_t *env, char *key)
 	char *path = NULL;
 	char *paths[1024];
 	char *buffer = NULL;
-	int i, pathlen;
-	char *temp_s = NULL;
+	int i, j;
+	char temp_s[1024];
 
 	if (!access(key, F_OK))
 		return (key);
@@ -85,14 +85,13 @@ __home char *get_path(list_t *env, char *key)
 
 	for (i = 0; paths[i]; i++)
 	{
-		pathlen = _strlen(paths[i]) + _strlen(key) + 1;
-		temp_s = malloc(sizeof(char) * pathlen);
-		if (!temp_s)
-			return (key);
 		sprintf(temp_s, "%s/%s", paths[i], key);
 		if (!access(temp_s, F_OK))
-			return (temp_s);
-		free(temp_s);
+		{
+			for (j = 0; temp_s[j]; j++)
+				key[j] = temp_s[j];
+			return (key);
+		}
 	}
 
 	return (key);

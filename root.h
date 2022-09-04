@@ -78,12 +78,9 @@ __home void start_i(void)
  */
 __home void free_array(char **str)
 {
-	int i;
+	int i = 0;
 
-	if (!str && !*str)
-		return;
-
-	for (i = 0; str[i]; i++)
+	for (i = 0; str[i] != NULL; i++)
 		free(str[i]);
 	free(str);
 }
