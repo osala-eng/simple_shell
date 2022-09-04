@@ -3,7 +3,7 @@
 
 #include "handle_env.h"
 #include "handle_path.h"
-#include "exit.h"
+#include "built_in.h"
 
 /**
  * ctrl_c - ignore ctrl-c and reprompt
@@ -80,21 +80,21 @@ __home int prompt(char **av, char **env)
 	pid_t pid;
 	list_t *env_l = NULL;
 	char *path = NULL;
+	int bi_ret = 0;
 
 	env_l = env_list(env);
-
 RESET:
 	if (__interactive)
 		start_i();
-
 	else
 		non_int = TRUE;
 	signal(SIGINT, ctrl_c);
 	arg = split_prompt(env_l);
 	path = get_path(env_l, arg[0]);
-	__exit(path);
 	pid = 0;
-	if (!arg[0])
+	bi_ret = 0;
+	bi_ret = built_in(env_l, arg);
+	if (!arg[0] || bi_ret == EOF)
 		goto RESET;
 	else if (!access(path, F_OK))
 		pid = fork();
@@ -109,10 +109,8 @@ RESET:
 
 	if (arg[0])
 		free_array(arg);
-	/*free(path);*/
 	if (!non_int)
 		goto RESET;
-
 	return (0);
 }
 #endif

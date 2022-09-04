@@ -1,26 +1,3 @@
-#ifndef _STR_TOOLS_B_H
-#define _STR_TOOLS_B_H
-
-#include "strtools.h"
-
-/**
- * _strcpy - copy string
- * @dest: destination
- * @src: source
- *
- * Return: Character
- */
-char *_strcpy(char *dest, char *src)
-{
-	int len, i;
-
-	len = _strlen(src);
-	for (i = 0; i <= len; i++)
-		dest[i] = src[i];
-
-	return (dest);
-}
-
 /**
  * _num_id - find index where a digit is first found in string
  * @s: string to search
@@ -60,11 +37,11 @@ __home int find_sign(char *s)
 }
 
 /**
- * cint - convert string to int
+ * _atoi - convert string to int
  * @s: string to convert
  * Return: integer
  */
-__home int cint(char *s)
+__home int _atoi(char *s)
 {
 
 	int _start_id = (_num_id(s));
@@ -101,4 +78,3 @@ __home int cint(char *s)
 
 	return (num * sign);
 }
-#endif

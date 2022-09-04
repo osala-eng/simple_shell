@@ -84,19 +84,6 @@ __home void free_list(list_t *list)
 }
 
 /**
- * print_env - print env
- * @str: string list
- * @env: list
- * Return: int
- */
-__home int print_env(char **str, list_t *env)
-{
-	free_array(str);
-	print_list(env);
-	return (0);
-}
-
-/**
  * env_list - create linked list of env
  * @env: enviroment variable
  * Return: list_t
