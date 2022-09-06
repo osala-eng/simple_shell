@@ -22,10 +22,10 @@
  * Return: size or EOF
  */
 ssize_t __get_delim(char **lineptr, size_t *n, int delim, FILE *stream)
-{	ssize_t result;
-	int i;
-	char *new_lineptr;
-	size_t needed, len = 0;
+{	ssize_t result = 0;
+	int i = 0;
+	char *new_lineptr = NULL;
+	size_t needed = 0, len = 0;
 
 	if (!lineptr || !n || !stream)
 	{	errno = EINVAL;

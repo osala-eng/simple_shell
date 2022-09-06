@@ -69,9 +69,11 @@ typedef unsigned long int ulint;
  */
 __home void start_i(void)
 {
-	BLUE;
-	write(STDOUT, "simple_shell", 12);
-	NC;
+	/*
+	 * BLUE;
+	 * write(STDOUT, "simple_shell", 12);
+	 * NC;
+	 */
 	write(STDOUT, "$ ", 2);
 }
 

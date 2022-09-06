@@ -47,7 +47,7 @@ int (*get_meth(char *str))(list_t*, char**)
 		 * {"cd", cd_built_in}
 		 */
 		{NULL, NULL} };
-	int i;
+	int i = 0;
 
 	for (i = 0; ops[i].key; i++)
 	{

@@ -13,7 +13,7 @@
 __home char *copy_env(char *str, int look_i)
 {
 	char *_str = NULL;
-	int i, len;
+	int i = 0, len = 0;
 
 	if (!str)
 		return (NULL);
@@ -38,7 +38,7 @@ __home char *copy_env(char *str, int look_i)
  */
 __home char *env_lookup(char *str, list_t *env)
 {
-	int i, look_i;
+	int i = 0, look_i = 0;
 
 	for (; env;)
 	{
@@ -66,7 +66,7 @@ __home char *get_path(list_t *env, char *key)
 	char *path = NULL;
 	char *paths[1024];
 	char *buffer = NULL;
-	int i, j;
+	int i = 0, j = 0;
 	char temp_s[1024];
 
 	if (!access(key, F_OK))

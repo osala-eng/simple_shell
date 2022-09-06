@@ -12,7 +12,7 @@
  */
 char *_strcpy(char *dest, char *src)
 {
-	int len, i;
+	int len = 0, i = 0;
 
 	len = _strlen(src);
 	for (i = 0; i <= len; i++)
@@ -28,7 +28,7 @@ char *_strcpy(char *dest, char *src)
  */
 int _num_id(char *s)
 {
-	int i;
+	int i = 0;
 
 	for (i = 0; i < _strlen(s); i++)
 	{
@@ -68,9 +68,9 @@ __home int cint(char *s)
 {
 
 	int _start_id = (_num_id(s));
-	int sign;
+	int sign = 0;
 	int _digits = 0;
-	int t = 1, i;
+	int t = 1, i = 0;
 	unsigned int num = 0;
 	int digit = (_num_id(s));
 

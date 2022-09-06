@@ -43,7 +43,8 @@ __home size_t print_list(list_t *h)
  */
 __home list_t *add_node_end(list_t **head, __silent char *str)
 {
-	list_t *new_list, *temp;
+	list_t *new_list = NULL;
+		list_t *temp = NULL;
 
 	new_list = malloc(sizeof(list_t));
 	if (!new_list)
@@ -72,7 +73,7 @@ KILL:	return (new_list);
  */
 __home void free_list(list_t *list)
 {
-	list_t *temp;
+	list_t *temp = NULL;
 
 	while (list)
 	{
@@ -91,7 +92,7 @@ __home void free_list(list_t *list)
 __home list_t *env_list(char **env)
 {
 	list_t *head = NULL;
-	int i;
+	int i = 0;
 
 	for (i = 0; env[i]; i++)
 		add_node_end(&head, env[i]);

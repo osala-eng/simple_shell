@@ -78,7 +78,7 @@ __home int prompt(char **av, char **env)
 	int status = 0;
 	int non_int = 0;
 	char **arg = NULL;
-	pid_t pid;
+	pid_t pid = 0;
 	list_t *env_l = NULL;
 	char *path = NULL;
 	int bi_ret = 0;
