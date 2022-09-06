@@ -4,6 +4,7 @@
 #include "handle_env.h"
 #include "handle_path.h"
 #include "built_in.h"
+#include "getline_def.h"
 
 /**
  * ctrl_c - ignore ctrl-c and reprompt
@@ -17,7 +18,7 @@ __home void ctrl_c(int __silent i)
 
 /**
  * ctrl_d - exit if control d
- * @ret: getline status
+ * @ret: __get_line status
  * @s: string to free
  * @arg: tokens to free
  * @env_l: list to free
@@ -50,18 +51,18 @@ __home char **split_prompt(__silent list_t *env_l)
 	ssize_t ret = 0;
 
 	arg = malloc(sizeof(char));
-	ret = getline(&s, &len, stdin);
+	ret = __get_line(&s, &len, stdin);
 	ctrl_d(ret, s, arg, env_l);
-	for (text = strtok(s, delim), i = 0 ; text; i++)
+	for (text = __str_tok(s, delim), i = 0 ; text; i++)
 	{
 		arg[i] = malloc(sizeof(char) * (_strlen(text) + 1));
 		if (!arg[i])
 			return (arg);
 		_strcpy(arg[i], (char *)text);
-		text = strtok(NULL, delim);
+		text = __str_tok(NULL, delim);
 	}
 	arg[i] = NULL;
-	free(s);
+	/*free(s);*/
 	return (arg);
 }
 

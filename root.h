@@ -31,6 +31,9 @@
 #include <dirent.h>
 #include <signal.h>
 #include <stdarg.h>
+#include <limits.h>
+#include <stdint.h>
+#include <errno.h>
 
 /**
  * enum simple_bool - simple boolean

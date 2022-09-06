@@ -80,7 +80,7 @@ __home int cint(char *s)
 	sign = find_sign(s);
 
 	while ((s[_start_id] >= '0' && s[_start_id] <= '9')
-	       && (_start_id <= _strlen(s))) /* count digits to print */
+		&& (_start_id <= _strlen(s))) /* count digits to print */
 	{
 		_digits += 1;
 		_start_id++;

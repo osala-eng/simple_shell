@@ -2,6 +2,7 @@
 #define HANDLE_PATH_H
 
 #include "string_t.h"
+#include "getline_def.h"
 
 /**
  * copy_env - copy value from env without key
@@ -75,10 +76,10 @@ __home char *get_path(list_t *env, char *key)
 	if (!path)
 		return (key);
 
-	for (buffer = strtok(path, ":"), i = 0; buffer; i++)
+	for (buffer = __str_tok(path, ":"), i = 0; buffer; i++)
 	{
 		paths[i] = buffer;
-		buffer = strtok(NULL, ":");
+		buffer = __str_tok(NULL, ":");
 	}
 	paths[i] = NULL;
 	free(path);
