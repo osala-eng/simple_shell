@@ -1,16 +1,18 @@
-#include "prompt.h"
+#include "shell.h"
 
 /**
  * main - creates a simple shell
- * @ac: num of args
+ * @ac: argument count
  * @av: argument vectors
  * @env: environmental variables
- * Return: 0
+ * Return: 0 on success
  */
-int main(__silent int ac, __silent char **av, __silent char **env)
+int main(int ac, char **av, char **env)
 {
-	int ret;
+	(void)ac;
+	(void)av;
 
-	ret = prompt(av, env);
-	return (ret);
+	prompt(env);
+
+	return (0);
 }
