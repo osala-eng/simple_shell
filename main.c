@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	if (!environ)
 		exit(-100);
 	if (argc != 1)
-	{	ret = proc_file_commands(argv[1], exe_ret);
+	{	ret = file_cmds(argv[1], exe_ret);
 		free_env();
 		free_alias_list(aliases);
 		return (*exe_ret);

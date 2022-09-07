@@ -17,12 +17,11 @@
 #define __silent __attribute__((__unused__))
 #define __home __attribute__((weak))
 
+typedef char mask_char;
+typedef int mask_int;
+
 /* Global environemnt */
 extern char **environ;
-/* Global program name */
-char *name;
-/* Global history counter */
-int hist;
 
 /**
  * struct list_s - A new struct type defining a linked list.
@@ -61,6 +60,8 @@ typedef struct alias_s
 
 /* Global aliases linked list */
 alias_t *aliases;
+mask_char *name;
+mask_int hist;
 
 /* Main Helpers */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
@@ -74,7 +75,7 @@ char *_itoa(int num);
 
 /* Input Helpers */
 void handle_line(char **line, ssize_t read);
-void variable_replacement(char **args, int *exe_ret);
+void substitute_arg(char **args, int *exe_ret);
 char *get_args(char *line, int *exe_ret);
 int call_args(char **args, char **front, int *exe_ret);
 int run_args(char **args, char **front, int *exe_ret);
@@ -95,13 +96,13 @@ int _strncmp(const char *s1, const char *s2, size_t n);
 
 /* Builtins */
 int (*get_builtin(char *command))(char **args, char **front);
-int shellby_exit(char **args, char **front);
-int shellby_env(char **args, __silent char **front);
-int shellby_setenv(char **args, __silent char **front);
-int shellby_unsetenv(char **args, __silent char **front);
-int shellby_cd(char **args, __silent char **front);
-int shellby_alias(char **args, __silent char **front);
-int shellby_help(char **args, __silent char **front);
+int builtin_exit(char **args, char **front);
+int builtin_env(char **args, __silent char **front);
+int builtin_setenv(char **args, __silent char **front);
+int builtin_unsetenv(char **args, __silent char **front);
+int builtin_cd(char **args, __silent char **front);
+int builtin_alias(char **args, __silent char **front);
+int builtin_help(char **args, __silent char **front);
 
 /* Builtin Helpers */
 char **_copyenv(void);
@@ -134,5 +135,5 @@ void help_setenv(void);
 void help_unsetenv(void);
 void help_history(void);
 
-int proc_file_commands(char *file_path, int *exe_ret);
+int file_cmds(char *file_path, int *exe_ret);
 #endif /* _SHELL_H_ */

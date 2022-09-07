@@ -1,7 +1,7 @@
 #include "root.h"
 
 /**
- * shellby_env - Prints the current environment.
+ * builtin_env - Prints the current environment.
  * @args: An array of arguments passed to the shell.
  * @front: A double pointer to the beginning of args.
  *
@@ -11,7 +11,7 @@
  * Description: Prints one variable per line in the
  *              format 'variable'='value'.
  */
-int shellby_env(char **args, __silent char **front)
+int builtin_env(char **args, __silent char **front)
 {
 	int index;
 	char nc = '\n';
@@ -30,7 +30,7 @@ int shellby_env(char **args, __silent char **front)
 }
 
 /**
- * shellby_setenv - Changes or adds an environmental variable to the PATH.
+ * builtin_setenv - Changes or adds an environmental variable to the PATH.
  * @args: An array of arguments passed to the shell.
  * @front: A double pointer to the beginning of args.
  * Description: args[1] is the name of the new or existing PATH variable.
@@ -39,7 +39,7 @@ int shellby_env(char **args, __silent char **front)
  * Return: If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_setenv(char **args, __silent char **front)
+int builtin_setenv(char **args, __silent char **front)
 {
 	char **env_var = NULL, **new_environ, *new_value;
 	size_t size;
@@ -84,7 +84,7 @@ int shellby_setenv(char **args, __silent char **front)
 }
 
 /**
- * shellby_unsetenv - Deletes an environmental variable from the PATH.
+ * builtin_unsetenv - Deletes an environmental variable from the PATH.
  * @args: An array of arguments passed to the shell.
  * @front: A double pointer to the beginning of args.
  * Description: args[1] is the PATH variable to remove.
@@ -92,7 +92,7 @@ int shellby_setenv(char **args, __silent char **front)
  * Return: If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_unsetenv(char **args, __silent char **front)
+int builtin_unsetenv(char **args, __silent char **front)
 {
 	char **env_var, **new_environ;
 	size_t size;

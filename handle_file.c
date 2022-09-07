@@ -38,16 +38,16 @@ int cant_open(char *file_path)
 }
 
 /**
- * proc_file_commands - Takes a file and attempts to run the commands stored
+ * file_cmds - Takes a file and attempts to run the commands stored
  * within.
  * @file_path: Path to the file.
  * @exe_ret: Return value of the last executed command.
  *
  * Return: If file couldn't be opened - 127.
- *	   If malloc fails - -1.
- *	   Otherwise the return value of the last command ran.
+ *		If malloc fails - -1.
+ *		Otherwise the return value of the last command ran.
  */
-int proc_file_commands(char *file_path, int *exe_ret)
+int file_cmds(char *file_path, int *exe_ret)
 {	ssize_t file, b_read, i;
 	unsigned int line_size = 0, old_size = 120;
 	char *line, **args, **front, buffer[120];
@@ -79,8 +79,8 @@ int proc_file_commands(char *file_path, int *exe_ret)
 			for (i += 1; i < line_size && line[i] == '\n'; i++)
 				line[i] = ' ';
 		}
-	}	
-	variable_replacement(&line, exe_ret);
+	}
+	substitute_arg(&line, exe_ret);
 	handle_line(&line, line_size);
 	args = _strtok(line, " ");
 	free(line);

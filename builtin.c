@@ -10,13 +10,13 @@
 int (*get_builtin(char *command))(char **args, char **front)
 {
 	builtin_t funcs[] = {
-		{ "exit", shellby_exit },
-		{ "env", shellby_env },
-		{ "setenv", shellby_setenv },
-		{ "unsetenv", shellby_unsetenv },
-		{ "cd", shellby_cd },
-		{ "alias", shellby_alias },
-		{ "help", shellby_help },
+		{ "exit", builtin_exit },
+		{ "env", builtin_env },
+		{ "setenv", builtin_setenv },
+		{ "unsetenv", builtin_unsetenv },
+		{ "cd", builtin_cd },
+		{ "alias", builtin_alias },
+		{ "help", builtin_help },
 		{ NULL, NULL }
 	};
 	int i;
@@ -30,7 +30,7 @@ int (*get_builtin(char *command))(char **args, char **front)
 }
 
 /**
- * shellby_exit - Causes normal process termination
+ * builtin_exit - Causes normal process termination
  *                for the shellby shell.
  * @args: An array of arguments containing the exit value.
  * @front: A double pointer to the beginning of args.
@@ -41,7 +41,7 @@ int (*get_builtin(char *command))(char **args, char **front)
  *
  * Description: Upon returning -3, the program exits back in the main function.
  */
-int shellby_exit(char **args, char **front)
+int builtin_exit(char **args, char **front)
 {
 	int i, len_of_int = 10;
 	unsigned int num = 0, max = 1 << (sizeof(int) * 8 - 1);
@@ -75,7 +75,7 @@ int shellby_exit(char **args, char **front)
 }
 
 /**
- * shellby_cd - Changes the current directory of the shellby process.
+ * builtin_cd - Changes the current directory of the shellby process.
  * @args: An array of arguments.
  * @front: A double pointer to the beginning of args.
  *
@@ -83,7 +83,7 @@ int shellby_exit(char **args, char **front)
  *         If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_cd(char **args, __silent char **front)
+int builtin_cd(char **args, __silent char **front)
 {	char **dir_info, *new_line = "\n";
 	char *oldpwd = NULL, *pwd = NULL;
 	struct stat dir;
@@ -128,11 +128,11 @@ int shellby_cd(char **args, __silent char **front)
 		return (-1);
 	dir_info[0] = "OLDPWD";
 	dir_info[1] = oldpwd;
-	if (shellby_setenv(dir_info, dir_info) == -1)
+	if (builtin_setenv(dir_info, dir_info) == -1)
 		return (-1);
 	dir_info[0] = "PWD";
 	dir_info[1] = pwd;
-	if (shellby_setenv(dir_info, dir_info) == -1)
+	if (builtin_setenv(dir_info, dir_info) == -1)
 		return (-1);
 	if (args[0] && args[0][0] == '-' && args[0][1] != '-')
 	{	write(STDOUT_FILENO, pwd, _strlen(pwd));
@@ -144,14 +144,14 @@ int shellby_cd(char **args, __silent char **front)
 }
 
 /**
- * shellby_help - Displays information about shellby builtin commands.
+ * builtin_help - Displays information about shellby builtin commands.
  * @args: An array of arguments.
  * @front: A pointer to the beginning of args.
  *
  * Return: If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_help(char **args, __silent char **front)
+int builtin_help(char **args, __silent char **front)
 {
 	if (!args[0])
 		help_all();

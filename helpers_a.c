@@ -89,7 +89,7 @@ char *get_env_value(char *beginning, int len)
 }
 
 /**
- * variable_replacement - Handles variable rep.
+ * substitute_arg - Handles variable rep.
  * @line: A double pointer containing the command and arguments.
  * @exe_ret: A pointer to the return value of the last executed command.
  *
@@ -97,7 +97,7 @@ char *get_env_value(char *beginning, int len)
  *              of the last executed program, and envrionmental variables
  *              preceded by $ with their corresponding value.
  */
-void variable_replacement(char **line, int *exe_ret)
+void substitute_arg(char **line, int *exe_ret)
 {	int j, k = 0, len;
 	char *rep = NULL, *old_l = NULL, *new_line;
 
