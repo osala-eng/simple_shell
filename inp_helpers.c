@@ -44,22 +44,19 @@ char *get_args(char *line, int *exe_ret)
  * Return: The return value of the last executed command.
  */
 int call_args(char **args, char **front, int *exe_ret)
-{
-	int ret, index;
+{	int ret, index;
 
 	if (!args[0])
 		return (*exe_ret);
 	for (index = 0; args[index]; index++)
 	{
 		if (_strncmp(args[index], "||", 2) == 0)
-		{
-			free(args[index]);
+		{	free(args[index]);
 			args[index] = NULL;
 			args = replace_aliases(args);
 			ret = run_args(args, front, exe_ret);
 			if (*exe_ret != 0)
-			{
-				args = &args[++index];
+			{	args = &args[++index];
 				index = 0;
 			}
 			else
@@ -70,14 +67,12 @@ int call_args(char **args, char **front, int *exe_ret)
 			}
 		}
 		else if (_strncmp(args[index], "&&", 2) == 0)
-		{
-			free(args[index]);
+		{	free(args[index]);
 			args[index] = NULL;
 			args = replace_aliases(args);
 			ret = run_args(args, front, exe_ret);
 			if (*exe_ret == 0)
-			{
-				args = &args[++index];
+			{	args = &args[++index];
 				index = 0;
 			}
 			else
@@ -87,8 +82,7 @@ int call_args(char **args, char **front, int *exe_ret)
 				return (ret);
 			}
 		}
-	}
-	args = replace_aliases(args);
+	}	args = replace_aliases(args);
 	ret = run_args(args, front, exe_ret);
 	return (ret);
 }

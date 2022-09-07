@@ -54,8 +54,7 @@ char *get_location(char *command)
  *	   with the current working directory.
  */
 char *fill_path_dir(char *path)
-{
-	int i, length = 0;
+{	int i, length = 0;
 	char *path_copy, *pwd;
 
 	pwd = *(_getenv("PWD")) + 4;
@@ -93,11 +92,8 @@ char *fill_path_dir(char *path)
 				_strcat(path_copy, ":");
 		}
 		else
-		{
 			_strncat(path_copy, &path[i], 1);
-		}
-	}
-	return (path_copy);
+	}	return (path_copy);
 }
 
 /**

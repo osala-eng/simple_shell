@@ -14,6 +14,9 @@
 #define END_OF_FILE -2
 #define EXIT -3
 
+#define __silent __attribute__((__unused__))
+#define __home __attribute__((weak))
+
 /* Global environemnt */
 extern char **environ;
 /* Global program name */
@@ -93,12 +96,12 @@ int _strncmp(const char *s1, const char *s2, size_t n);
 /* Builtins */
 int (*get_builtin(char *command))(char **args, char **front);
 int shellby_exit(char **args, char **front);
-int shellby_env(char **args, char __attribute__((__unused__)) **front);
-int shellby_setenv(char **args, char __attribute__((__unused__)) **front);
-int shellby_unsetenv(char **args, char __attribute__((__unused__)) **front);
-int shellby_cd(char **args, char __attribute__((__unused__)) **front);
-int shellby_alias(char **args, char __attribute__((__unused__)) **front);
-int shellby_help(char **args, char __attribute__((__unused__)) **front);
+int shellby_env(char **args, __silent char **front);
+int shellby_setenv(char **args, __silent char **front);
+int shellby_unsetenv(char **args, __silent char **front);
+int shellby_cd(char **args, __silent char **front);
+int shellby_alias(char **args, __silent char **front);
+int shellby_help(char **args, __silent char **front);
 
 /* Builtin Helpers */
 char **_copyenv(void);

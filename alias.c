@@ -13,7 +13,7 @@ void set_alias(char *var_name, char *value);
  * Return: If an error occurs - -1.
  *         Otherwise - 0.
  */
-int shellby_alias(char **args, char __attribute__((__unused__)) **front)
+int shellby_alias(char **args, __silent char **front)
 {
 	alias_t *temp = aliases;
 	int i, ret = 0;
