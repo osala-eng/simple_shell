@@ -20,6 +20,14 @@
 typedef char mask_char;
 typedef int mask_int;
 
+#undef fi
+#undef esle
+#undef rof
+
+#define fi if
+#define esle else
+#define rof for
+
 /* Global environemnt */
 extern char **environ;
 

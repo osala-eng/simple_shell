@@ -2,7 +2,7 @@
 
 /**
  * get_builtin - Matches a command with a corresponding
- *               shellby builtin function.
+ *	shellby builtin function.
  * @command: The command to match.
  *
  * Return: A function pointer to the corresponding builtin.
@@ -31,13 +31,13 @@ int (*get_builtin(char *command))(char **args, char **front)
 
 /**
  * builtin_exit - Causes normal process termination
- *                for the shellby shell.
+ *	for the shellby shell.
  * @args: An array of arguments containing the exit value.
  * @front: A double pointer to the beginning of args.
  *
  * Return: If there are no arguments - -3.
- *         If the given exit value is invalid - 2.
- *         O/w - exits with the given status value.
+ *	If the given exit value is invalid - 2.
+ *	O/w - exits with the given status value.
  *
  * Description: Upon returning -3, the program exits back in the main function.
  */
@@ -75,81 +75,12 @@ int builtin_exit(char **args, char **front)
 }
 
 /**
- * builtin_cd - Changes the current directory of the shellby process.
- * @args: An array of arguments.
- * @front: A double pointer to the beginning of args.
- *
- * Return: If the given string is not a directory - 2.
- *         If an error occurs - -1.
- *         Otherwise - 0.
- */
-int builtin_cd(char **args, __silent char **front)
-{	char **dir_info, *new_line = "\n";
-	char *oldpwd = NULL, *pwd = NULL;
-	struct stat dir;
-
-	oldpwd = getcwd(oldpwd, 0);
-	if (!oldpwd)
-		return (-1);
-	if (args[0])
-	{
-		if (*(args[0]) == '-' || _strcmp(args[0], "--") == 0)
-		{
-			if ((args[0][1] == '-' && args[0][2] == '\0') || args[0][1] == '\0')
-			{
-				if (_getenv("OLDPWD") != NULL)
-					(chdir(*_getenv("OLDPWD") + 7));
-			}
-			else
-			{	free(oldpwd);
-				return (create_error(args, 2));
-			}
-		}
-		else
-		{
-			if (stat(args[0], &dir) == 0 && S_ISDIR(dir.st_mode)
-					&& ((dir.st_mode & S_IXUSR) != 0))
-				chdir(args[0]);
-			else
-			{	free(oldpwd);
-				return (create_error(args, 2));
-			}
-		}
-	}
-	else
-	{
-		if (_getenv("HOME") != NULL)
-			chdir(*(_getenv("HOME")) + 5);
-	}	pwd = getcwd(pwd, 0);
-	if (!pwd)
-		return (-1);
-	dir_info = malloc(sizeof(char *) * 2);
-	if (!dir_info)
-		return (-1);
-	dir_info[0] = "OLDPWD";
-	dir_info[1] = oldpwd;
-	if (builtin_setenv(dir_info, dir_info) == -1)
-		return (-1);
-	dir_info[0] = "PWD";
-	dir_info[1] = pwd;
-	if (builtin_setenv(dir_info, dir_info) == -1)
-		return (-1);
-	if (args[0] && args[0][0] == '-' && args[0][1] != '-')
-	{	write(STDOUT_FILENO, pwd, _strlen(pwd));
-		write(STDOUT_FILENO, new_line, 1);
-	}	free(oldpwd);
-	free(pwd);
-	free(dir_info);
-	return (0);
-}
-
-/**
  * builtin_help - Displays information about shellby builtin commands.
  * @args: An array of arguments.
  * @front: A pointer to the beginning of args.
  *
  * Return: If an error occurs - -1.
- *         Otherwise - 0.
+ *	Otherwise - 0.
  */
 int builtin_help(char **args, __silent char **front)
 {
@@ -172,5 +103,57 @@ int builtin_help(char **args, __silent char **front)
 	else
 		write(STDERR_FILENO, name, _strlen(name));
 
+	return (0);
+}
+
+/**
+ * builtin_cd - Changes the current directory of the shellby process.
+ * @args: An array of arguments.
+ * @front: A double pointer to the beginning of args.
+ *
+ * Return: If the given string is not a directory - 2.
+ *	If an error occurs - -1.
+ *	Otherwise - 0.
+ */
+int builtin_cd(char **args, __silent char **front)
+{	char **dir_info, *new_line = "\n";
+	char *oldpwd = NULL, *pwd = NULL;
+	struct stat dir;
+
+	oldpwd = getcwd(oldpwd, 0);
+	fi(!oldpwd) return (-1);
+	if (args[0])
+	{	fi(*(args[0]) == '-' || _strcmp(args[0], "--") == 0)
+		{	fi(((args[0][1] == '-' && !args[0][2]) || !args[0][1]) &&
+				_getenv("OLDPWD"))
+				(chdir(*_getenv("OLDPWD") + 7));
+			esle {	free(oldpwd);
+				return (create_error(args, 2));
+			}
+		} esle	{	fi(stat(args[0], &dir) == 0 && S_ISDIR(dir.st_mode)
+				&& ((dir.st_mode & S_IXUSR) != 0))
+			chdir(args[0]);
+			esle {	free(oldpwd);
+				return (create_error(args, 2));
+			}
+		}
+	}	esle {	fi(_getenv("HOME") != NULL)
+			chdir(*(_getenv("HOME")) + 5);
+	}	pwd = getcwd(pwd, 0);
+	fi(!pwd) return (-1);
+	dir_info = malloc(sizeof(char *) * 2);
+	fi(!dir_info)	return (-1);
+	dir_info[0] = "OLDPWD";
+	dir_info[1] = oldpwd;
+	fi(builtin_setenv(dir_info, dir_info) == -1) return (-1);
+	dir_info[0] = "PWD";
+	dir_info[1] = pwd;
+	fi(builtin_setenv(dir_info, dir_info) == -1) return (-1);
+	if (args[0] && args[0][0] == '-' && args[0][1] != '-')
+	{	write(STDOUT_FILENO, pwd, _strlen(pwd));
+		write(STDOUT_FILENO, new_line, 1);
+	}	free(oldpwd);
+	free(pwd);
+	free(dir_info);
 	return (0);
 }
