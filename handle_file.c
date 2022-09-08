@@ -50,6 +50,17 @@ ssize_t skip_blanc(char *line)
 		line[i] = ' ';
 	return (i);
 }
+
+/**
+ * start_f - open file
+ * @file_path: file_path
+ * Return: ssize_t
+ */
+ssize_t start_f(char *file_path)
+{
+	hist = 0;
+	return (open(file_path, O_RDONLY));
+}
 /**
  * file_cmds - Takes a file and attempts to run the commands stored
  * within.
@@ -65,17 +76,17 @@ int file_cmds(char *file_path, int *exe_ret)
 	unsigned int line_size = 0, old_size = 120;
 	char *line, **args, **front, buffer[120];
 
-	hist = 0;
-	file = open(file_path, O_RDONLY);
+	file = start_f(file_path);
 	fi(file == -1) { *exe_ret = cant_open(file_path);
 		return (*exe_ret);
-	}	line = malloc(sizeof(char) * old_size);
+	}	line = (char *) malloc(sizeof(char) * old_size);
 	fi(!line) return (-1);
+	line[0] = END;
 	do {	b_read = read(file, buffer, 119);
 		fi(b_read == 0 && line_size == 0) return (*exe_ret);
 		buffer[b_read] = '\0';
 		line_size += b_read;
-		line = _realloc(line, old_size, line_size);
+	fi(line_size > old_size) line = _realloc(line, old_size, line_size);
 		_strcat(line, buffer);
 		old_size = line_size;
 	} while (b_read);

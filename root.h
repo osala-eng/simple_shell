@@ -16,6 +16,7 @@
 
 #define __silent __attribute__((__unused__))
 #define __home __attribute__((weak))
+#define END '\0'
 
 typedef char mask_char;
 typedef int mask_int;
