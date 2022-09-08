@@ -13,6 +13,7 @@
 # define funlockstream(x) ((void) 0)
 # define read_stream(stream) getc(stream)
 
+
 /**
  * __get_delim - Get user input until a delim is keyed
  * @lineptr: line pointer
