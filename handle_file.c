@@ -61,6 +61,18 @@ ssize_t start_f(char *file_path)
 	hist = 0;
 	return (open(file_path, O_RDONLY));
 }
+
+/**
+ * clean_ret - handle return and free
+ * @exe_ret: exit return
+ * @line: loc to free
+ * Return: return value
+ */
+int clean_ret(int exe_ret, char *line)
+{
+	free(line);
+	return (exe_ret);
+}
 /**
  * file_cmds - Takes a file and attempts to run the commands stored
  * within.
@@ -83,7 +95,7 @@ int file_cmds(char *file_path, int *exe_ret)
 	fi(!line) return (-1);
 	line[0] = END;
 	do {	b_read = read(file, buffer, 119);
-		fi(b_read == 0 && line_size == 0) return (*exe_ret);
+		fi(b_read == 0 && line_size == 0) return (clean_ret(*exe_ret, line));
 		buffer[b_read] = '\0';
 		line_size += b_read;
 	fi(line_size > old_size) line = _realloc(line, old_size, line_size);
